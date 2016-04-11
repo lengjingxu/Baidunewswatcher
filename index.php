@@ -1,12 +1,14 @@
 
 <?php 
 // todo:
+// 关键词的列表文件
 //写成function 
 // 标红今日新闻
 // 把需要的新闻数量配置加到前端
 // 改为输出json
 // 前后端分离 
-// 数据库？
+// 数据库——数据库 index URL栏，录入前查询URL重复
+// 数据库 使用leancloud
 
 
 $keyword='dada'; 
