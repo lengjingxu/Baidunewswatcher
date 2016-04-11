@@ -6,6 +6,7 @@
 // 把需要的新闻数量配置加到前端
 // 改为输出json
 // 前后端分离 
+// 数据库？
 
 
 $keyword='dada'; 
@@ -27,7 +28,7 @@ $data
 HTML_SECTION
 );
 libxml_clear_errors();
-
+//抓取最近的50条消息 
 for ($i = 1; $i<50; $i++) {
 	echo $i ;
 foreach( ( new DOMXPath( $doc ) )->query( '//*[@id="'.$i.'"]/h3' ) 
