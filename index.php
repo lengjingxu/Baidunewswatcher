@@ -1,18 +1,18 @@
-
+<style>.red {color:red;}</style>
 <?php 
 // todo:
 // 关键词的列表文件
-//写成function 
-// 标红今日新闻
-// 把需要的新闻数量配置加到前端
+//
+// 
 // 改为输出json
 // 前后端分离 
 // 数据库——数据库 index URL栏，录入前查询URL重复
 // 数据库 使用leancloud
 
 
-$keyword='dada'; 
-$Url='http://news.baidu.com/ns?word='.$keyword.'&bs=dada&sr=0&cl=2&rn=50&tn=news&ct=0&clk=sortbytime';
+function  CurlNews ($keyword,$nb)
+	{ 
+$Url='http://news.baidu.com/ns?word='.$keyword.'&sr=0&cl=2&rn='.$nb.'&tn=news&ct=0&clk=sortbytime';
 $curl = curl_init();  
 curl_setopt($curl, CURLOPT_URL, $Url );  
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  
@@ -30,20 +30,54 @@ $data
 HTML_SECTION
 );
 libxml_clear_errors();
-//抓取最近的50条消息 
-for ($i = 1; $i<50; $i++) {
-	echo $i ;
-foreach( ( new DOMXPath( $doc ) )->query( '//*[@id="'.$i.'"]/h3' ) 
+//抓取最近的nb条消息 
+for ($i = 1; $i<=$nb; $i++) {
+echo "<div class='no'>".$i."</div>" ;
+foreach( ( new DOMXPath( $doc ) )->query( '//*[@id="'.$i.'"]/h3[@class="c-title"]' ) 
     as $title )	;
-echo "<h2>".$title->textContent."</h2><br>";
+$newtitle=$title->textContent;
+//echo "<div class='newstitle'>".$newtitle."</div><br>";
 
 foreach( ( new DOMXPath( $doc ) )->query( '//*[@id="'.$i.'"]/h3/a' ) 
      as $nurl );
 $newsurl=$nurl->getAttribute('href');
-echo $newsurl;
 	
-foreach( ( new DOMXPath( $doc ) )->query('//*[@id="'.$i.'"]/div/div[2]/p' ) 
-    as $author )	;
-echo	$author->textContent;
+foreach( ( new DOMXPath( $doc ) )->query('//*[@id="'.$i.'"]//p[@class="c-author"]' ) 
+    as $author ); 
+$newsauthor=$author->textContent; 
+
+
+$datelen=mb_strlen(strrchr($newsauthor,chr(0xC2) . chr(0xA0)));
+if (empty($TodayNews)) $TodayNews = 0;
+
+if  ($datelen<15) 
+	{
+	echo "<div class='newstitle red'>".$newtitle."</div><br>";
+
+	$TodayNews=$TodayNews+1;
+	
+	} else{
+	echo "<div class='newstitle'>".$newtitle."</div><br>";
+	}
+echo "<div class='newsurl'>".$newsurl."</div>";
+echo "<div class='newsauther'>".$newsauthor."</div>";
 echo "<br>"; 
+
+} 
+echo "<h2>今天有".$TodayNews."条新闻</h2><hr>";
+$TodayNews=0;
 }
+
+
+$lists = array("法国","达达","雅典","中国","36kr"); 
+
+foreach ($lists as $value) {
+  echo "$value <br>";
+  CurlNews( $value,'10');
+
+}
+
+
+
+
+?>
