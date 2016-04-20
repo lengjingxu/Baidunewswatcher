@@ -32,7 +32,6 @@ HTML_SECTION
 libxml_clear_errors();
 //抓取最近的nb条消息 
 for ($i = 1; $i<=$nb; $i++) {
-echo "<div class='no'>".$i."</div>" ;
 foreach( ( new DOMXPath( $doc ) )->query( '//*[@id="'.$i.'"]/h3[@class="c-title"]' ) 
     as $title )	;
 $newtitle=$title->textContent;
@@ -52,20 +51,23 @@ if (empty($TodayNews)) $TodayNews = 0;
 
 if  ($datelen<15) 
 	{
-	echo "<div class='newstitle red'>".$newtitle."</div><br>";
-
+		
+echo "<div class='no'>".$i."</div>" ;
+echo "<div class='newstitle red'><a href=".$newsurl.">".$newtitle."</a></div><br>";
+ //echo "<div class='newsurl'><a href=".$newsurl.">".$newsurl."</a></div>";
+ echo "<div class='newsauther'>".$newsauthor."</div>";
 	$TodayNews=$TodayNews+1;
 	
-	} else{
-	echo "<div class='newstitle'>".$newtitle."</div><br>";
-	}
-echo "<div class='newsurl'>".$newsurl."</div>";
-echo "<div class='newsauther'>".$newsauthor."</div>";
-echo "<br>"; 
+	} 
+	// else{
+	// echo "<div class='newstitle'>".$newtitle."</div><br>";
+	// }
+
+// echo "<br>"; 
 
 } 
 echo "<h2>今天有".$TodayNews."条新闻</h2><hr>";
-$TodayNews=0;
+$TodayNews=0; 
 }
 
 

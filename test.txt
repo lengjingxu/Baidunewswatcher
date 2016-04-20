@@ -1,0 +1,51 @@
+	   { newslist ： [
+			{
+			title: 标题1，
+			url：链接，
+			date
+			},
+			{
+			title: 标题2，
+			url：链接，
+			date
+			},{
+			title: 标题3，
+			url：链接，
+			date
+			}
+			],
+		keyword： [新闻词],
+		total:[ 10 ] 
+		},
+		
+	   { newslist ： [
+			{
+			title: 标题1，
+			url：链接，
+			date
+			},
+			{
+			title: 标题2，
+			url：链接，
+			date
+			},{
+			title: 标题3，
+			url：链接，
+			date
+			}
+			],
+		keyword： [新闻词],
+		total:[ 10 ] 
+		}
+	
+	
+	
+	$titlelist=array( 标题1,标题2,标题3,);
+	$urllist=array( url1,url2,url3,);
+	$datelist=array( date1,date2,date3,);
+	$result['total']=sizeof($title);
+	for($i=0;$i<sizeof($title),$i++) 
+	{
+		$result['key'][]=array("keyword"=>$keyword[$i],"title"=>$titlelist[$i],"url"=>$urllist[$i],"date"=>$datelist[$i], )
+	}
+	echo json_encode($result)

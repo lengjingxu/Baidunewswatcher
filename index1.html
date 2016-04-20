@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="stylesheet" href="lib/bootstrap.min.css">
+<link rel="stylesheet" href="lib/bootstrap-theme.css">
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+<script src="lib/jquery.min.js"></script>
+<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+<script src="lib/bootstrap.min.js"></script>
+<script src="lib/angular.min.js"></script>
+
+<style>
+	.panel-heading {height:80px;background:#16aad8!important;}
+	.col-md-3{margin-top: 15px;}
+	.nb {    float: right;
+    position: absolute;
+    right: 30px;
+    bottom: 20px;size:18px;
+    color: aliceblue;}
+	.keyword { margin:10px 0; color:#fff;}
+	a:focus, a:hover { text-decoration: none;}
+	.more {float: right;
+    position: absolute;right: 30px;
+    bottom: 4px;}
+</style>
+</head>
+	<body>
+	
+		<div class="">
+			<div class="col-md-4">.col-md-4</div>
+			<div class="col-md-4">.col-md-4</div>
+			<div class="col-md-4">.col-md-4</div>
+			<div>
+				todo
+					<ul>
+						<li>鏃犳柊闂诲叧閿瘝闈犲悗鎺掑簭</li>
+						<li>鎼滅储鏍?杩囨护</li>
+						<li> 鍏抽敭璇嶅垪琛?json鏂囦欢鐨勫鍒犳敼鏌?/li>
+						<li>鐎戝竷娴佸竷灞�<li>
+					</ul>
+			</div>
+		</div>
+	
+<div ng-app="myApp" ng-controller="newslist"> 
+
+	<!-- <div class="row">
+
+	  <div  class="col-md-4" ng-repeat="x in repon">
+		<h1> {{ x.keyword }} </h1> <h2>{{ x.nb }}</h2>
+			<div id="{{$index}}">
+				 <div ng-repeat="b in x.newslist">
+						<a href=" {{b.url}} ">{{b.title}}</a> <br>{{b.date}} 
+				</div>
+			</div>
+	  </div>
+	</div>  -->
+<div class="container-fluid">
+	<div> <input type="text" ng-model="search"> </div>
+<div class="row-fluid masonry">
+	<div class="panel-group item" ng-repeat="x in repon | filter:search | orderBy:'-nb'" id="accordion" role="tablist" aria-multiselectable="true">
+	  <div class="col-md-3">
+	  <div class="panel panel-default ">
+		<div class="panel-heading" role="tab" id="heading{{$index}}">
+		  <div class="panel-title">
+			<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index}}" aria-expanded="false"  aria-controls="collapse{{$index}}">
+			 <h2 class="keyword">{{ x.keyword }}</h2>
+			 <span class="nb"> {{ x.nb }}</span>
+			</a>
+		  </div>
+		</div>
+		<div id="collapse{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
+		  <div class="panel-body">
+					<div ng-repeat="b in x.newslist">
+							<a href=" {{b.url}} ">{{b.title}}</a> <br>{{b.date}} 
+					</div>
+					<a class="more" href="http://news.baidu.com/ns?word={{ x.keyword }}&sr=0&cl=2&rn=30&tn=news&ct=0&clk=sortbytime"> 鏌ョ湅鏇村鏂伴椈</a>
+		  </div>
+		</div>
+	  </div>
+	  </div>	
+	</div>
+</div>
+</div>
+</div>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('newslist', function($scope, $http) {
+    $http.get("http://localhost/Baidunewswatcher/api.php")
+    .success(function(response) {$scope.repon = response; });
+});
+</script>
+
+	<body>
+</html>
